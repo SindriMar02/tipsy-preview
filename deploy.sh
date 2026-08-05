@@ -1,13 +1,13 @@
 #!/bin/bash
 # Publish the PUBLIC files to gh-pages from an isolated worktree.
-# Target: https://sindrimar02.github.io/gilligogg-preview/ (noindex).
+# Target: https://sindrimar02.github.io/tipsy-preview/ (noindex).
 # Never checkout gh-pages inside the main tree: its files live at the repo
 # root, so clearing the root there would delete the real source.
-# OUTREACH.md and the local server are deliberately NOT published — a client
-# preview must never expose internal notes.
+# The local server is deliberately NOT published — a client preview must
+# never expose internal tooling.
 set -e
 REPO="$(cd "$(dirname "$0")" && pwd)"
-WT="$(mktemp -d)/gilligogg-pages"
+WT="$(mktemp -d)/tipsy-pages"
 
 git -C "$REPO" worktree add --detach -q "$WT"
 cd "$WT"
@@ -35,4 +35,4 @@ echo "published:"; git -C "$REPO" ls-tree --name-only origin/gh-pages
 
 # GATE 2 — on-disk correct is not proof the client sees an icon: the build can rename
 # files and the Pages CDN takes a minute. Check the DEPLOYED url. Polls ~3 min.
-node "$REPO"/../_tools/favicon-verify-live.mjs "https://sindrimar02.github.io/gilligogg-preview/"
+node "$REPO"/../_tools/favicon-verify-live.mjs "https://sindrimar02.github.io/tipsy-preview/"

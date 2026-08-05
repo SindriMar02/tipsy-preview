@@ -58,8 +58,8 @@ function dish(drink, kind, id, i, price) {
           </li>`;
 }
 
-function course(id, title, priceLabel, drinks, kindFor) {
-  const items = drinks.map((dr, i) => dish(dr, kindFor(dr), `${id}-${i}`, i, '')).join('\n');
+function course(id, title, priceLabel, drinks, kindFor, itemPrice = '') {
+  const items = drinks.map((dr, i) => dish(dr, kindFor(dr), `${id}-${i}`, i, itemPrice)).join('\n');
   return `      <section class="course" aria-labelledby="course-${id}">
         <header class="course__head">
           <h3 class="course__title" id="course-${id}">${esc(title)}</h3>
@@ -148,7 +148,7 @@ const html = `<!doctype html>
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Tipsý Bar &amp; Lounge &middot; Hafnarstræti 1-3, Reykjavík" />
 <meta property="og:description" content="Specially crafted cocktails, classic drinks &amp; bubbles. Happy hour every day 16–19: 50% off Tipsý cocktails." />
-<meta property="og:image" content="${P.strawberry.src}" />
+<meta property="og:image" content="https://sindrimar02.github.io/tipsy-preview/${P.strawberry.src}" />
 <meta property="og:locale" content="en_GB" />
 
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -232,7 +232,7 @@ const html = `<!doctype html>
     </nav>
     <div class="menu__foot">
       <p class="mono">HAFNARSTRÆTI 1-3 &middot; 101 REYKJAVÍK &middot; ${esc(D.biz.phone)}</p>
-      <a class="btn btn--main" href="${D.biz.booking}" rel="noopener">Bóka borð</a>
+      <a class="btn btn--main" href="${D.biz.booking}" rel="noopener" lang="is">Bóka borð</a>
     </div>
   </div>
 </div>
@@ -259,7 +259,7 @@ const html = `<!doctype html>
       <p class="hero__blurb">Rust velvet, mirrored arches, a wall of cognac, and a sheet of drinks their crew keeps winning with. Twenty-two and up.</p>
       <div class="hero__acts">
         <a class="btn btn--main" href="#drinks">See the list</a>
-        <a class="btn btn--ghost" href="${D.biz.booking}" rel="noopener">Bóka borð</a>
+        <a class="btn btn--ghost" href="${D.biz.booking}" rel="noopener" lang="is">Bóka borð</a>
       </div>
     </div>
 
@@ -281,7 +281,7 @@ const html = `<!doctype html>
       <h2 class="h2">The neon says it<br /><em>before you sit down</em></h2>
       <p class="lead">Feeling tipsy. The room takes the old shopfront at Hafnarstræti 1-3 and lines it with rust velvet, pink curtains and mirrored arches full of cognac. A lounge built around one sheet of cocktails and the people who mix them.</p>
       <blockquote class="quote">
-        <p>&bdquo;Hlökkum til að sjá þig&hellip; smá tipsý!&ldquo;</p>
+        <p lang="is">&bdquo;Hlökkum til að sjá þig&hellip; smá tipsý!&ldquo;</p>
         <footer>
           <span class="quote__who">The bar's own welcome</span>
           <span class="quote__src mono">TIPSYBAR.IS</span>
@@ -312,7 +312,7 @@ ${fig('crew', 'THE CREW · UNDER THEIR OWN NEON', 'bleed--tall')}
   <div class="sheet">
 ${course('sig', 'Tipsý kokteilar', '', D.signatures, dr => dr.long ? 'highball' : 'coupe')}
 ${course('cls', 'Klassískir · Classics', '', D.classics, dr => dr.glass)}
-${course('zero', 'Án áfengis · Alcohol free', `${D.mocktails.price} kr.`, D.mocktails.items, dr => dr.long ? 'collins' : 'coupe')}
+${course('zero', 'Án áfengis · Alcohol free', `${D.mocktails.price} kr.`, D.mocktails.items, dr => dr.long ? 'collins' : 'coupe', D.mocktails.price)}
   </div>
 
 ${fig('beet', 'FROM THE BAR · BEETROOT, ONE CUBE')}
@@ -373,10 +373,10 @@ ${wineBlock}
 </section>
 
 <!-- ══════════ 9. happy hour ══════════ -->
-<section class="rent" id="happy">
+<section class="rent" id="happy" aria-labelledby="happy-h">
   <div class="rent__band">
-    <p class="rent__eyebrow mono">${esc(D.biz.happyHourIs)}</p>
-    <p class="rent__big">HAPPY HOUR<br />16 – 19</p>
+    <p class="rent__eyebrow mono" lang="is">${esc(D.biz.happyHourIs)}</p>
+    <h2 class="rent__big" id="happy-h">HAPPY HOUR<br />16 – 19</h2>
     <p class="rent__sub">Half price on every Tipsý cocktail on the sheet. Not some days. Every day.</p>
   </div>
 </section>
@@ -399,7 +399,7 @@ ${wineBlock}
       <p class="visit__addr">${esc(D.biz.street)}<br />${esc(D.biz.postal)} ${esc(D.biz.city)}</p>
       <p class="visit__phone"><a href="tel:${D.biz.phoneHref}">${esc(D.biz.phone)}</a></p>
       <p class="visit__blurb">Tables for seven or more are booked by phone or e-mail; everything else through Dineout or by walking in.</p>
-      <a class="btn btn--main" href="${D.biz.booking}" rel="noopener">Bóka borð &middot; Dineout</a>
+      <a class="btn btn--main" href="${D.biz.booking}" rel="noopener" lang="is">Bóka borð &middot; Dineout</a>
       <a class="btn btn--ghost" href="mailto:${D.biz.email}">${D.biz.email}</a>
       <a class="btn btn--ghost" href="https://www.instagram.com/${D.biz.instagram}" rel="noopener">@${D.biz.instagram}</a>
     </div>
@@ -412,7 +412,7 @@ ${fig('bar', 'THE TINS · RED LAMPS BEHIND')}
 <!-- ══════════ 11. closer ══════════ -->
 <section class="closer">
   <img class="closer__logo" src="assets/wordmark.svg" alt="Tipsý Bar &amp; Lounge" width="200" height="134" />
-  <p class="closer__line">Hlökkum til að sjá þig&hellip; smá tipsý!</p>
+  <p class="closer__line" lang="is">Hlökkum til að sjá þig&hellip; smá tipsý!</p>
   <a class="btn btn--main" href="#drinks">See the list</a>
 </section>
 
